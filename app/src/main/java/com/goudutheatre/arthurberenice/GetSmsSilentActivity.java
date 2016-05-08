@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,17 +18,22 @@ public class GetSmsSilentActivity extends AppCompatActivity {
     private int result;
     private static final Uri SMS_URI_INBOX = Uri.parse("content://sms/inbox");
     private List<String> messages = new ArrayList<>();
+    private String Hashfilter = "";
 
     private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Hashfilter = getIntent().getExtras().getString("HASH_FILTER");
 
         //génération de la liste
-        cursor = getContentResolver().query(SMS_URI_INBOX, null, null, null, null);
-        //Type: INTEGER (long)
-        //Constant Value: "date_sent"
+        //cursor = getContentResolver().query(SMS_URI_INBOX, null, null, null, null);
+        String[] projection = new String[] { "_id", "address", "person", "body", "date_sent", "type" };
+        Cursor cursor = getContentResolver().query(SMS_URI_INBOX, projection, "body LIKE '%" + Hashfilter +"%'", null, "date asc");
+        //Cursor cursor = getContentResolver().query(SMS_URI_INBOX, projection, "body LIKE '%#arthurberenice%'", null, "date asc");
+        //Cursor cursor = getContentResolver().query(SMS_URI_INBOX, projection, null, null, "date asc");
+        //Cursor cur = getContentResolver().query(SMS_URI_INBOX, projection, "address LIKE '%Google%'", null, "date asc");
 
         if (cursor == null)
         {
@@ -41,8 +48,10 @@ public class GetSmsSilentActivity extends AppCompatActivity {
             {
                 final String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
                 final String body = cursor.getString(cursor.getColumnIndexOrThrow("body"));
-                final String date_sent = cursor.getString(cursor.getColumnIndexOrThrow("date_sent"));
-                //cursor.get
+                //final String date_sent = cursor.getString(cursor.getColumnIndexOrThrow("date_sent"));
+               // Date date = new Date(cursor.getLong(0));
+                //String formattedDate = new SimpleDateFormat("MM/dd/yyyy").format(date);
+                String date_sent = new SimpleDateFormat("dd/MM/yyyy hh:mm").format(new Date(cursor.getLong(cursor.getColumnIndexOrThrow("date_sent"))));
 
                 messages.add(date_sent + " - " + address + " - " + body);
 

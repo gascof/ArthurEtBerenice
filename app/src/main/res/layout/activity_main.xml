@@ -138,20 +138,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Get SMS silent"
-        android:layout_alignTop="@+id/buttonShowSms"
+        android:layout_below="@+id/buttonGetSms"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <TextView android:id="@+id/textNrGetSms"
-        android:layout_width="24dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="000"
-        android:layout_below="@+id/buttonGetSms"
-        android:layout_toRightOf="@+id/buttonGetSmsSilent"
-        android:layout_toEndOf="@+id/buttonGetSmsSilent" />
-
-    <Button android:id="@+id/buttonShowSms"
+        <Button android:id="@+id/buttonShowSms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show SMS"
@@ -159,13 +150,42 @@
         android:layout_toRightOf="@+id/textNrGetSms"
         android:layout_toEndOf="@+id/textNrGetSms" />
 
+    <Button android:id="@+id/buttonSendSmsSilent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send SMS"
+        android:layout_below="@+id/buttonGetSms"
+        android:layout_toRightOf="@+id/buttonShowSms"
+        android:layout_toEndOf="@+id/buttonShowSms" />
+
+    <TextView android:id="@+id/textNrGetSms"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/buttonGetSmsSilent"
+        android:layout_alignEnd="@+id/buttonGetSmsSilent" />
+
+    <TextView android:id="@+id/textNrSentSms"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/buttonSendSmsSilent"
+        android:layout_alignEnd="@+id/buttonSendSmsSilent" />
+
+
+
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/buttonGetSmsSilent"
+        android:layout_below="@+id/textNrGetSms"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
 
 
 </RelativeLayout>
