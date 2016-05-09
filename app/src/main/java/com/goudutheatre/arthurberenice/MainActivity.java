@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode== SENDSMSSILENT_BUTTON_REQUEST){
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "réponse de SendSmsSilentActivity ", Toast.LENGTH_SHORT).show();
-                NrSentSms = data.getIntExtra("nrSelSms");
+                NrSentSms = data.getExtras().getInt("nrSelSms");
                 TextView textViewNrSentSms = (TextView) findViewById(R.id.textNrSentSms);
                 textViewNrSentSms.setText(""+NrSentSms);
             }

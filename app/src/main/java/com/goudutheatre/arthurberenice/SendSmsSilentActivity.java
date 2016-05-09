@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,9 @@ public class SendSmsSilentActivity extends AppCompatActivity {
     private List<String> messages = new ArrayList<>();
     private String Hashfilter = "";
     private int NrSelSms = 0;
+    private int NrSmsToSend = 0;
+    private static final Uri SMS_URI_OUTBOX = Uri.parse("content://sms/inbox");
+    private String smsText = "sms réponse Arthur & Bérénice";
 
 
     private Cursor cursor;
@@ -32,7 +37,28 @@ public class SendSmsSilentActivity extends AppCompatActivity {
         NrSelSms = messages.size();
 
 
+
 // envoyer les SMS de réponses aux SMS contenus dans messages
+        if (NrSelSms<=0)
+        {
+            Log.e("SendSmsSilentActivity", "No message to reply to");
+            result = RESULT_CANCELED;
+        }
+
+        if (NrSelSms>0)
+        {
+            result = RESULT_OK;
+            NrSmsToSend = NrSelSms;
+            //final String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
+            Toast.makeText(this, "trying to send sms.", Toast.LENGTH_LONG).show();
+
+            do
+            {
+                sendSms("5556", smsText);
+                NrSmsToSend --;
+            }
+            while (NrSmsToSend >0);
+        }
 
         result = RESULT_OK;
 
@@ -43,5 +69,10 @@ public class SendSmsSilentActivity extends AppCompatActivity {
         finish();
     }
 
+
+    public void sendSms(String phoneNumber, String smsBody) {
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, smsBody, null, null);
+    }
 
 }
