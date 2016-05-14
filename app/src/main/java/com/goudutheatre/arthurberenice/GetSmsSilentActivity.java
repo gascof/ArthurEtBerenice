@@ -18,6 +18,8 @@ public class GetSmsSilentActivity extends AppCompatActivity {
     private int result;
     private static final Uri SMS_URI_INBOX = Uri.parse("content://sms/inbox");
     private List<String> messages = new ArrayList<>();
+    private List<String> phoneNrs = new ArrayList<>();
+    private List<String> bodys = new ArrayList<>();
     private String Hashfilter = "";
 
     private Cursor cursor;
@@ -54,6 +56,9 @@ public class GetSmsSilentActivity extends AppCompatActivity {
                 String date_sent = new SimpleDateFormat("dd/MM/yyyy hh:mm").format(new Date(cursor.getLong(cursor.getColumnIndexOrThrow("date_sent"))));
 
                 messages.add(date_sent + " - " + address + " - " + body);
+                phoneNrs.add(address);
+                bodys.add(body);
+
 
                 Log.d("retrieveContacts", "The message with from + '" + address + "' with the body '" + body + "' has been retrieved");
             }
@@ -69,6 +74,8 @@ public class GetSmsSilentActivity extends AppCompatActivity {
         //réponse à l'activité qui a demandé la liste
         Intent intent = new Intent();
         intent.putExtra("liste", (Serializable) messages);
+        intent.putExtra("listePhoneNrs", (Serializable) phoneNrs);
+        intent.putExtra("listeBodys", (Serializable) bodys);
         setResult(result, intent);
         finish();
     }

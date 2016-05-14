@@ -18,18 +18,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public final static int GETSMSSILENT_BUTTON_REQUEST = 1;
     public final static int SENDSMSSILENT_BUTTON_REQUEST = 2;
+    public final static int SHOW_SELECT_BUTTON_REQUEST = 3;
     private List<String> messages = new ArrayList<>();
+    private List<String> phoneNrs = new ArrayList<>();
+    private List<String> bodys = new ArrayList<>();
+    private List<String> phoneNrsSelected = new ArrayList<>();
+
     private int NrGetSms = 0;
-    private int NrSelSms = 0;
+    private int NrSelPhone = 0;
     private int NrSentSms = 0;
     //private int dateStart;
 
@@ -83,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button buttonShowSelect = (Button) findViewById(R.id.buttonShowSelect); //accès à l'activité paramètres
+        buttonShowSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShowSelectActivity.class);
+                intent.putExtra("liste", (Serializable) phoneNrs);
+                startActivityForResult(intent, SHOW_SELECT_BUTTON_REQUEST);
+            }
+        });
+
         final Button buttonGetSmsSilent = (Button) findViewById(R.id.buttonGetSmsSilent);
         buttonGetSmsSilent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SendSmsSilentActivity.class);
-                intent.putExtra("liste", (Serializable) messages);
+                intent.putExtra("liste", (Serializable) phoneNrs);
                 startActivityForResult(intent, SENDSMSSILENT_BUTTON_REQUEST);
             }
         });
@@ -123,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "réponse de GetSmsSilentActivity ", Toast.LENGTH_SHORT).show();
                 messages = data.getStringArrayListExtra("liste");
+                bodys = data.getStringArrayListExtra("listeBodys");
+                phoneNrs = data.getStringArrayListExtra("listePhoneNrs");
                 NrGetSms = messages.size();
                 TextView textViewNrGetSms = (TextView) findViewById(R.id.textNrGetSms);
                 textViewNrGetSms.setText(""+NrGetSms);
@@ -135,6 +149,15 @@ public class MainActivity extends AppCompatActivity {
                 NrSentSms = data.getExtras().getInt("nrSelSms");
                 TextView textViewNrSentSms = (TextView) findViewById(R.id.textNrSentSms);
                 textViewNrSentSms.setText(""+NrSentSms);
+            }
+        }
+        if (requestCode== SHOW_SELECT_BUTTON_REQUEST){
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "réponse de SHOW_SELECT_BUTTON_REQUEST ", Toast.LENGTH_SHORT).show();
+                phoneNrsSelected = data.getStringArrayListExtra("phoneNrsSelected");
+                NrSelPhone = phoneNrsSelected.size();
+                TextView textViewNrPhoneSel = (TextView) findViewById(R.id.textNrSelPhone);
+                textViewNrPhoneSel.setText("" + NrSelPhone);
             }
         }
     }

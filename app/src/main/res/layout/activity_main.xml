@@ -146,17 +146,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show SMS"
-        android:layout_below="@+id/buttonGetSms"
-        android:layout_toRightOf="@+id/textNrGetSms"
-        android:layout_toEndOf="@+id/textNrGetSms" />
+            android:layout_below="@+id/gridLayout"
+            android:layout_toRightOf="@+id/buttonGetSms"
+            android:layout_toEndOf="@+id/buttonGetSms" />
 
     <Button android:id="@+id/buttonSendSmsSilent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send SMS"
-        android:layout_below="@+id/buttonGetSms"
-        android:layout_toRightOf="@+id/buttonShowSms"
-        android:layout_toEndOf="@+id/buttonShowSms" />
+        android:layout_below="@+id/buttonShowSms"
+        android:layout_toRightOf="@+id/buttonShowSelect"
+        android:layout_toEndOf="@+id/buttonShowSelect" />
 
     <TextView android:id="@+id/textNrGetSms"
         android:layout_width="24dp"
@@ -186,6 +186,24 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:id="@+id/buttonShowSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select"
+        android:layout_below="@+id/buttonGetSms"
+        android:layout_toRightOf="@+id/buttonGetSmsSilent"
+        android:layout_toEndOf="@+id/buttonGetSmsSilent" />
+
+    <TextView
+        android:id="@+id/textNrSelPhone"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="000"
+        android:layout_above="@android:id/list"
+        android:layout_toLeftOf="@+id/buttonSendSmsSilent"
+        android:layout_toStartOf="@+id/buttonSendSmsSilent" />
 
 
 </RelativeLayout>

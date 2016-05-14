@@ -11,7 +11,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,36 +18,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".SettingsActivity"
+        <activity
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
-
-        <activity android:name=".GetSmsActivity"
+        <activity
+            android:name=".GetSmsActivity"
             android:label="@string/title_activity_get_sms">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
-
-        <activity android:name=".GetSmsSilentActivity"
+        <activity
+            android:name=".GetSmsSilentActivity"
             android:label="@string/title_activity_get_sms_silent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
-
-        <activity android:name=".SendSmsSilentActivity"
+        <activity
+            android:name=".SendSmsSilentActivity"
             android:label="@string/title_activity_send_sms_silent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
-
-
+        <activity android:name=".ShowSelectActivity"></activity>
     </application>
 
 </manifest>

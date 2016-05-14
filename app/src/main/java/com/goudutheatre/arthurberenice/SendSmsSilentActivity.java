@@ -20,7 +20,7 @@ import java.util.List;
 public class SendSmsSilentActivity extends AppCompatActivity {
     private int result;
     private static final Uri SMS_URI_INBOX = Uri.parse("content://sms/inbox");
-    private List<String> messages = new ArrayList<>();
+    private List<String> phoneNrs = new ArrayList<>();
     private String Hashfilter = "";
     private int NrSelSms = 0;
     private int NrSmsToSend = 0;
@@ -33,8 +33,8 @@ public class SendSmsSilentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messages = getIntent().getStringArrayListExtra("liste");
-        NrSelSms = messages.size();
+        phoneNrs = getIntent().getStringArrayListExtra("liste");
+        NrSelSms = phoneNrs.size();
 
 
 
@@ -54,13 +54,13 @@ public class SendSmsSilentActivity extends AppCompatActivity {
 
             do
             {
-                sendSms("5556", smsText);
+                sendSms(phoneNrs.get(NrSmsToSend-1), smsText);
                 NrSmsToSend --;
             }
             while (NrSmsToSend >0);
+            result = RESULT_OK;
         }
 
-        result = RESULT_OK;
 
         //réponse à l'activité qui a demandé la liste
         Intent intent = new Intent();
