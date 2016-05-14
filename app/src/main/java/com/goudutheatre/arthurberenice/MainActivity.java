@@ -1,15 +1,12 @@
 package com.goudutheatre.arthurberenice;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,11 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
     public final static int GETSMSSILENT_BUTTON_REQUEST = 1;
     public final static int SENDSMSSILENT_BUTTON_REQUEST = 2;
-    public final static int SHOW_SELECT_BUTTON_REQUEST = 3;
+    public final static int SHOWSELECT_BUTTON_REQUEST = 3;
     private List<String> messages = new ArrayList<>();
     private List<String> phoneNrs = new ArrayList<>();
     private List<String> bodys = new ArrayList<>();
     private List<String> phoneNrsSelected = new ArrayList<>();
+    private List<String> quotes = new ArrayList<>();
+    private List<String> quotesSelected = new ArrayList<>();
 
     private int NrGetSms = 0;
     private int NrSelPhone = 0;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private int year;
     private int month;
     private int day;
-    static final int DATE_PICKER_ID = 1111;
+    //static final int DATE_PICKER_ID = 1111;
 
     private TextView dateStart, dateEnd;
     private String dateInit;
@@ -55,10 +54,7 @@ public class MainActivity extends AppCompatActivity {
         year  = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day   = c.get(Calendar.DAY_OF_MONTH);
-        dateInit = (day) +"/"+ (month+1) +"/"+ (year);//new StringBuilder()
-                // Month is 0 based, just add 1
-               // .append(month + 1).append("-").append(day).append("-")
-                //.append(year).append(" ");
+        dateInit = (day) +"/"+ (month+1) +"/"+ (year); // Month is 0 based, just add 1
 
         // Show current date
         dateStart = (TextView) findViewById(R.id.dateStart);
@@ -91,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ShowSelectActivity.class);
                 intent.putExtra("liste", (Serializable) phoneNrs);
-                startActivityForResult(intent, SHOW_SELECT_BUTTON_REQUEST);
+                startActivityForResult(intent, SHOWSELECT_BUTTON_REQUEST);
             }
         });
 
@@ -122,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SendSmsSilentActivity.class);
-                intent.putExtra("liste", (Serializable) phoneNrs);
+                //intent.putExtra("liste", (Serializable) phoneNrs);
+                intent.putExtra("liste", (Serializable) phoneNrsSelected);
                 startActivityForResult(intent, SENDSMSSILENT_BUTTON_REQUEST);
             }
         });
@@ -143,15 +140,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-        if (requestCode== SENDSMSSILENT_BUTTON_REQUEST){
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "réponse de SendSmsSilentActivity ", Toast.LENGTH_SHORT).show();
-                NrSentSms = data.getExtras().getInt("nrSelSms");
-                TextView textViewNrSentSms = (TextView) findViewById(R.id.textNrSentSms);
-                textViewNrSentSms.setText(""+NrSentSms);
-            }
-        }
-        if (requestCode== SHOW_SELECT_BUTTON_REQUEST){
+
+        if (requestCode== SHOWSELECT_BUTTON_REQUEST){
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "réponse de SHOW_SELECT_BUTTON_REQUEST ", Toast.LENGTH_SHORT).show();
                 phoneNrsSelected = data.getStringArrayListExtra("phoneNrsSelected");
@@ -160,7 +150,18 @@ public class MainActivity extends AppCompatActivity {
                 textViewNrPhoneSel.setText("" + NrSelPhone);
             }
         }
+
+        if (requestCode== SENDSMSSILENT_BUTTON_REQUEST){
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "réponse de SendSmsSilentActivity ", Toast.LENGTH_SHORT).show();
+                NrSentSms = data.getExtras().getInt("nrSelSms");
+                TextView textViewNrSentSms = (TextView) findViewById(R.id.textNrSentSms);
+                textViewNrSentSms.setText(""+NrSentSms);
+            }
+        }
     }
+
+
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();

@@ -48,14 +48,38 @@ public class ShowSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean checked = checkboxSelectAll.isChecked();
-                for (int i = 0; i < list.getCount(); i++) {list.setItemChecked(i, checked);}
+                for (int i = 0; i < list.getCount(); i++) {
+                    list.setItemChecked(i, checked);
+                }
             }
         });
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // checkbox doublons
+        final CheckBox checkboxDoublons = (CheckBox) findViewById(R.id.checkBoxDoublons);
+        checkboxDoublons.setChecked(true);
+        checkboxDoublons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean doublonOn = checkboxDoublons.isChecked();
+                for (int i = 0; i < list.getCount(); i++) {
+                    if (list.isItemChecked(i)) {
+                        String phoneNr = phoneNrs.get(i);
+                        for (int j=0; j < list.getCount(); j++) {
+                            if ((phoneNrs.get(j).equals(phoneNr)) & (i!=j)){
+                                list.setItemChecked(j, doublonOn);
+                            }
+                        }
+                    }
+
+                }
+            }
+        });
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                checkboxSelectAll.setChecked(list.getCount()==list.getCheckedItemCount());
+                checkboxSelectAll.setChecked(list.getCount() == list.getCheckedItemCount());
             }
         });
 
@@ -73,12 +97,17 @@ public class ShowSelectActivity extends AppCompatActivity {
 
                 if (nrPhones > 0) {
                     result = RESULT_OK;
-                    do {
+                    for (int i = 0; i < list.getCount(); i++) {
+                        if (list.isItemChecked(i)) {
+                            phoneNrsSelected.add(phoneNrs.get(i));
+                        }
+                    }
+                    /*do {
                         if (list.isItemChecked(nrPhones)) {
-                            phoneNrsSelected.add(phoneNrs.get(nrPhones - 1));
+                            phoneNrsSelected.add(phoneNrs.get(nrPhones 1));
                         }
                         nrPhones--;
-                    } while (nrPhones > 0);
+                    } while (nrPhones > 0);*/
                 }
                 //réponse à l'activité qui a demandé la liste
                 Intent intent = new Intent();
