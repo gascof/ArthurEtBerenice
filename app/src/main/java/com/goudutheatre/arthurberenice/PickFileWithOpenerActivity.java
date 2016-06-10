@@ -38,6 +38,8 @@ package com.goudutheatre.arthurberenice;
         import java.io.IOException;
         import java.io.InputStreamReader;
         import java.io.Serializable;
+        import java.util.ArrayList;
+        import java.util.List;
 
 /**
  * An activity to illustrate how to pick a file with the
@@ -88,51 +90,6 @@ public class PickFileWithOpenerActivity extends BaseDemoActivity {
         }
     }
 
-/*
-    private ResultCallback<DriveApi.DriveContentsResult> driveContentsCallback =
-            new ResultCallback<DriveApi.DriveContentsResult>() {
-                @Override
-                public void onResult(DriveApi.DriveContentsResult result) {
-                    if (!result.getStatus().isSuccess()) {
-                        Log.d(TAG, "Error while opening the file contents " + result.getStatus().getStatusMessage());
-                        return;
-                    }
-                    DriveContents contents = result.getDriveContents();
-
-                    //reading the input stream
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(contents.getInputStream()));
-                    StringBuilder builder = new StringBuilder();
-                    String line;
-                    try {
-                        while ((line = reader.readLine()) != null) {
-                            builder.append(line);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    String contentsAsString = builder.toString();
-
-                    contents.commit(mGoogleApiClient, null).setResultCallback(new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(Status result) {
-                            // handle the response status
-                        }
-                    });
-
-
-                    TextView textViewQuotes = (TextView) findViewById(R.id.textViewQuotes);
-                    textViewQuotes.setText(contentsAsString);
-                    //showMessage(contentsAsString);
-                    intentresult = RESULT_OK;
-                    //réponse à l'activité qui a demandé la liste
-                    Intent intent = new Intent();
-                    //intent.putExtra("phoneNrsSelected", (Serializable) phoneNrsSelected);
-                    setResult(intentresult, intent);
-                    finish();
-                }
-            };
-*/
-
     private void open() {
         DriveFile driveFile =  mSelectedFileDriveId.asDriveFile();
         driveFile.open(getGoogleApiClient(), DriveFile.MODE_READ_ONLY, null)
@@ -144,6 +101,8 @@ public class PickFileWithOpenerActivity extends BaseDemoActivity {
             new ResultCallback<DriveApi.DriveContentsResult>() {
                 @Override
                 public void onResult(DriveApi.DriveContentsResult result) {
+                    List<String> quotes = new ArrayList<>();
+
                     if (!result.getStatus().isSuccess()) {
                         showMessage("Error while opening the file contents");
                         return;
@@ -158,6 +117,7 @@ public class PickFileWithOpenerActivity extends BaseDemoActivity {
                     try {
                         while ((line = reader.readLine()) != null) {
                             builder.append(line);
+                            quotes.add(line);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -169,7 +129,8 @@ public class PickFileWithOpenerActivity extends BaseDemoActivity {
                     intentresult = RESULT_OK;
                     //réponse à l'activité qui a demandé la liste
                     Intent intent = new Intent();
-                    intent.putExtra("quotes", contentsAsString);
+                    intent.putExtra("quotesString", contentsAsString);
+                    intent.putExtra("quotes", (Serializable) quotes);
                     setResult(intentresult, intent);
                     finish();
                 }

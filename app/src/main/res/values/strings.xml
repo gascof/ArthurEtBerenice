@@ -62,6 +62,9 @@
     <string name="title_activity_get_sms">GetSmsActivity</string>
     <string name="title_activity_get_sms_silent">GetSmsSilentActivity</string>
     <string name="title_activity_send_sms_silent">SendSmsSilentActivity</string>
+    <string name="title_activity_show_select">ShowSelectActivity</string>
+    <string name="title_activity_show_select_quotes">ShowSelectQuotesActivity</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

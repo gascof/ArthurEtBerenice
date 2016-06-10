@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
                 messages = data.getStringArrayListExtra("liste");
                 bodys = data.getStringArrayListExtra("listeBodys");
                 phoneNrs = data.getStringArrayListExtra("listePhoneNrs");
+                phoneNrsSelected = phoneNrs;
                 NrGetSms = messages.size();
                 TextView textViewNrGetSms = (TextView) findViewById(R.id.textNrGetSms);
                 textViewNrGetSms.setText(""+NrGetSms);
-
             }
         }
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "réponse de SendSmsSilentActivity ", Toast.LENGTH_SHORT).show();
                 NrSentSms = data.getExtras().getInt("nrSelSms");
                 TextView textViewNrSentSms = (TextView) findViewById(R.id.textNrSentSms);
-                textViewNrSentSms.setText(""+NrSentSms);
+                textViewNrSentSms.setText("" + NrSentSms);
             }
         }
     }

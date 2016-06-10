@@ -17,16 +17,17 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".SettingsActivity"
             android:label="@string/title_activity_settings">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
+
         <activity android:name=".GetSmsActivity"
             android:label="@string/title_activity_get_sms">
             <meta-data
@@ -39,18 +40,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
+
         <activity android:name=".SendSmsSilentActivity"
             android:label="@string/title_activity_send_sms_silent">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
-        <activity android:name=".ShowSelectActivity" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".PickFileWithOpenerActivity"
+        <activity android:name=".ShowSelectActivity"
+            android:label="@string/title_activity_show_select">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.goudutheatre.arthurberenice.MainActivity" />
+        </activity>
+
+        <activity android:name=".ShowSelectQuotesActivity"
+            android:label="@string/title_activity_show_select_quotes">
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.goudutheatre.arthurberenice.MainActivity" />
+        </activity>
+
+
+<activity android:name=".PickFileWithOpenerActivity"
             android:label="@string/title_activity_main22"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
