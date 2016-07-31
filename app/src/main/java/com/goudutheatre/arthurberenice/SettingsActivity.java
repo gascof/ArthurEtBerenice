@@ -41,19 +41,16 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        File file = new File(QUOTES_FILENAME);
-        //if(file.exists()){
         try {
-            //Log.e("SettingsActivity.", "file " + QUOTES_FILENAME + " exists");
-            quotesSelected = readListStringToInternalStorageFile(QUOTES_FILENAME);
+            //quotesSelected = readListStringToInternalStorageFile(QUOTES_FILENAME);
+            quotesSelected = LocalFileManagerClass.readListStringToInternalStorageFile(QUOTES_FILENAME, this);
             quotes = quotesSelected;
-            //} else {
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("SettingsActivity.", "file "+ QUOTES_FILENAME +" doesn't exist");
         }
 
-        final Button buttonDrivePick = (Button) findViewById(R.id.buttonDrivePick); //accès à l'activité paramètres
+        final Button buttonDrivePick = (Button) findViewById(R.id.buttonDrivePick);
         buttonDrivePick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        final Button buttonShowSelect = (Button) findViewById(R.id.buttonSelect); //accès à l'activité paramètres
+        final Button buttonShowSelect = (Button) findViewById(R.id.buttonSelect);
         buttonShowSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,14 +79,12 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == QUOTES_PICK_REQUEST) {
             if (resultCode == RESULT_OK) {
-                //Toast.makeText(this, "retour de QUOTES_REQUEST", Toast.LENGTH_SHORT).show();
                 quotesString = data.getStringExtra("quotesString");
                 quotes = data.getStringArrayListExtra("quotes");
                 quotesSelected = quotes;
-                //TextView textViewQuotes = (TextView) findViewById(R.id.textViewQuotes);
-                //textViewQuotes.setText(quotesString);
                 updateQuotesListView();
-                writeListStringToInternalStorageFile(QUOTES_FILENAME, quotesSelected);
+                //writeListStringToInternalStorageFile(QUOTES_FILENAME, quotesSelected);
+                LocalFileManagerClass.writeListStringToInternalStorageFile(QUOTES_FILENAME, quotesSelected, this);
                 File file = new File(QUOTES_FILENAME);
                 if (file.exists()) {
                     Log.e("SettingsActivity.", "file " + QUOTES_FILENAME + " created/updated");
@@ -101,11 +96,10 @@ public class SettingsActivity extends AppCompatActivity {
         if (requestCode == QUOTES_SELECT_REQUEST) {
             if (resultCode == RESULT_OK) {
                 quotesSelected = data.getStringArrayListExtra("quotesSelected");
-                //TextView textViewQuotes = (TextView) findViewById(R.id.textViewQuotes);
-                //textViewQuotes.setText(quotesString);
                 updateQuotesListView();
                 File file = new File(QUOTES_FILENAME);
-                writeListStringToInternalStorageFile(QUOTES_FILENAME, quotesSelected);
+                //writeListStringToInternalStorageFile(QUOTES_FILENAME, quotesSelected);
+                LocalFileManagerClass.writeListStringToInternalStorageFile(QUOTES_FILENAME, quotesSelected, this);
                 if (file.exists()) {
                     Log.e("SettingsActivity.", "file " + QUOTES_FILENAME + " created/updated");
                 }else{
@@ -122,59 +116,4 @@ public class SettingsActivity extends AppCompatActivity {
         textViewNrGetSms.setText(quotesSelected.size()+ " / " + quotes.size());
     }
 
-    public void writeListStringToInternalStorageFile(String fileName, List<String> liste) {
-        String eol = System.getProperty("line.separator");
-        int nrItems = liste.size();
-        BufferedWriter writer = null;
-        try {
-            writer =
-                    new BufferedWriter(new OutputStreamWriter(openFileOutput(fileName,
-                            Context.MODE_PRIVATE)));
-                if (nrItems > 0) {
-                    for (int i = 0; i < nrItems; i++) {
-                        writer.write(liste.get(i) + eol);
-                    }
-                }
-            //writer.write("This is a test1." + eol);
-            //writer.write("This is a test2." + eol);
-            Log.e("SettingsActivity", "writer ok");
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("SettingsActivity", "exception");
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public List<String> readListStringToInternalStorageFile(String fileName) {
-        List<String> listeString = new ArrayList<>();
-        String eol = System.getProperty("line.separator");
-        BufferedReader input = null;
-        try {
-            input = new BufferedReader(new InputStreamReader(openFileInput(fileName)));
-            String line;
-            StringBuffer buffer = new StringBuffer();
-            while ((line = input.readLine()) != null) {
-                listeString.add(line);
-                //buffer.append(line + eol);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return listeString;
-    }
 }

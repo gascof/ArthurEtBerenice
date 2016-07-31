@@ -21,11 +21,15 @@ public class SendSmsSilentActivity extends AppCompatActivity {
     private int result;
     private static final Uri SMS_URI_INBOX = Uri.parse("content://sms/inbox");
     private List<String> phoneNrs = new ArrayList<>();
-    private String Hashfilter = "";
+    //private String Hashfilter = "";
     private int NrSelSms = 0;
+    private int NrSelQuotes = 0;
     private int NrSmsToSend = 0;
     private static final Uri SMS_URI_OUTBOX = Uri.parse("content://sms/inbox");
-    private String smsText = "sms réponse Arthur & Bérénice";
+    private String smsText = "Merci de votre participation au projet Arthur et Bérénice - GOUDU théâtre";
+
+    private List<String> quotesSelected = new ArrayList<>();
+    private String QUOTES_FILENAME = "QuotesSelected";
 
 
     private Cursor cursor;
@@ -35,6 +39,11 @@ public class SendSmsSilentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         phoneNrs = getIntent().getStringArrayListExtra("liste");
         NrSelSms = phoneNrs.size();
+        String quote = "";
+
+        // lire les citations à envoyer
+        quotesSelected = LocalFileManagerClass.readListStringToInternalStorageFile(QUOTES_FILENAME, this);
+        NrSelQuotes = quotesSelected.size();
 
 
 
@@ -54,7 +63,8 @@ public class SendSmsSilentActivity extends AppCompatActivity {
 
             do
             {
-                sendSms(phoneNrs.get(NrSmsToSend-1), smsText);
+                if (NrSelQuotes>0){quote ="'"+quotesSelected.get((NrSmsToSend-1)%NrSelQuotes)+"' -";}
+                sendSms(phoneNrs.get(NrSmsToSend-1), quote + smsText);
                 NrSmsToSend --;
             }
             while (NrSmsToSend >0);
