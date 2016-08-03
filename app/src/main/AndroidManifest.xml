@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.goudutheatre.arthurberenice">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
@@ -13,60 +14,51 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="android.support.multidex.MultiDexApplication">
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+       <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
         <activity
             android:name=".GetSmsActivity"
             android:label="@string/title_activity_get_sms">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
         <activity
             android:name=".GetSmsSilentActivity"
             android:label="@string/title_activity_get_sms_silent">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
         <activity
             android:name=".SendSmsSilentActivity"
             android:label="@string/title_activity_send_sms_silent">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
         <activity
             android:name=".ShowSelectActivity"
             android:label="@string/title_activity_show_select">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
         <activity
             android:name=".ShowSelectQuotesActivity"
             android:label="@string/title_activity_show_select_quotes">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.goudutheatre.arthurberenice.MainActivity" />
         </activity>
         <activity
             android:name=".PickFileWithOpenerActivity"
-            android:label="@string/title_activity_main22"
+            android:label="@string/title_activity_pick_file"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        // api key generatd on Lapcof : AIzaSyDkQ8UWFpRZttNWMd0A4ZJI55TZcU_xGYk
+        //client OAuth 2.0 , Id 199125728760-r41jo31gncbbe0jhmdrjp1qslhbena95.apps.googleusercontent.com
     </application>
 
 </manifest>

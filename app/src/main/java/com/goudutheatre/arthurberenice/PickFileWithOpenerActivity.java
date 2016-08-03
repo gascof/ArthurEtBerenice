@@ -16,17 +16,10 @@ package com.goudutheatre.arthurberenice;
         import android.content.Intent;
         import android.content.IntentSender;
         import android.content.IntentSender.SendIntentException;
-        import android.net.Uri;
         import android.os.Bundle;
         import android.util.Log;
-        import android.widget.ProgressBar;
-        import android.widget.TextView;
-
-        import com.google.android.gms.appindexing.Action;
-        import com.google.android.gms.appindexing.AppIndex;
         import com.google.android.gms.common.api.GoogleApiClient;
         import com.google.android.gms.common.api.ResultCallback;
-        import com.google.android.gms.common.api.Status;
         import com.google.android.gms.drive.Drive;
         import com.google.android.gms.drive.DriveApi;
         import com.google.android.gms.drive.DriveContents;
@@ -40,6 +33,18 @@ package com.goudutheatre.arthurberenice;
         import java.io.Serializable;
         import java.util.ArrayList;
         import java.util.List;
+// from example https://developers.google.com/google-apps/activity/v1/quickstart/android
+        /*import com.google.android.gms.common.ConnectionResult;
+        import com.google.android.gms.common.GoogleApiAvailability;
+        import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+        import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
+        import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+        import com.google.api.services.appsactivity.AppsactivityScopes;
+        import com.google.api.services.appsactivity.model.*;
+        import pub.devrel.easypermissions.AfterPermissionGranted;
+        import pub.devrel.easypermissions.EasyPermissions;
+*/
+
 
 /**
  * An activity to illustrate how to pick a file with the
