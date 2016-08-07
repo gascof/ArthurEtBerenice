@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, GetSmsSilentActivity.class);
-                intent.putExtra("HASH_FILTER", "#arthurberenice");
+                //intent.putExtra("HASH_FILTER", "#arthurberenice");
                 startActivityForResult(intent, GETSMSSILENT_BUTTON_REQUEST);
             }
         });
@@ -138,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
                 NrGetSms = messages.size();
                 TextView textViewNrGetSms = (TextView) findViewById(R.id.textNrGetSms);
                 textViewNrGetSms.setText(""+NrGetSms);
+            }
+            else {
+                Toast.makeText(this, "result_cancel de GetSmsSilentActivity ", Toast.LENGTH_SHORT).show();
             }
         }
 

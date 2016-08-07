@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,17 +23,21 @@ import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class SettingsActivity extends AppCompatActivity {
 
     public final static int QUOTES_PICK_REQUEST = 1;
     public final static int QUOTES_SELECT_REQUEST = 2;
     private String quotesString;
+    private String hashtag;
     private List<String> quotes = new ArrayList<>();
     private List<String> quotesSelected = new ArrayList<>();
     TextView textViewNrGetSms;
 
     private String QUOTES_FILENAME = "QuotesSelected";
+    private String HASHTAG_FILENAME = "hastag";
+
 
 
 
@@ -41,6 +46,36 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //gestion du hashtag
+        final TextView editTextSmsFilter = (EditText) findViewById(R.id.editTextSmsFilter);
+        //lecture du filtre enregistré dans le fichier local
+        try {
+            //quotesSelected = readListStringToInternalStorageFile(QUOTES_FILENAME);
+            hashtag = LocalFileManagerClass.readStringToInternalStorageFile(HASHTAG_FILENAME, this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("SettingsActivity.", "file "+ HASHTAG_FILENAME +" doesn't exist, default value");
+            hashtag = "ArthurBerenice";
+            LocalFileManagerClass.writeStringToInternalStorageFile(HASHTAG_FILENAME, hashtag, this);
+            editTextSmsFilter.setText(hashtag);
+
+        }
+        editTextSmsFilter.setText(hashtag);
+        //sauvegarde d'un nouveau filtre
+        final Button buttonHashtagSave = (Button) findViewById(R.id.buttonSaveFilterText);
+        buttonHashtagSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hashtag = "" + editTextSmsFilter.getText();
+                LocalFileManagerClass.writeStringToInternalStorageFile(HASHTAG_FILENAME, hashtag, SettingsActivity.this);
+            }
+        });
+
+
+
+
+        //lecture des quotes enregistrées dans le fichier local
         try {
             //quotesSelected = readListStringToInternalStorageFile(QUOTES_FILENAME);
             quotesSelected = LocalFileManagerClass.readListStringToInternalStorageFile(QUOTES_FILENAME, this);

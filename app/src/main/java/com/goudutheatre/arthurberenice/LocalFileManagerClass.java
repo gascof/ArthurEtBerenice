@@ -25,9 +25,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by fr029638 on 09/07/2016.
- */
 public class LocalFileManagerClass {
     private List<String> liste = new ArrayList<>();
     private String fileName;
@@ -90,5 +87,50 @@ public class LocalFileManagerClass {
         return listeString;
     }
 
+    static public void writeStringToInternalStorageFile(String fileName, String string, Context myContext) {
+        String eol = System.getProperty("line.separator");
+        BufferedWriter writer = null;
+        try {
+            writer =
+                    new BufferedWriter(new OutputStreamWriter(myContext.openFileOutput(fileName,
+                            Context.MODE_PRIVATE)));
+            writer.write(string + eol);
+            Log.e("SettingsActivity", "writer ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("SettingsActivity", "exception");
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    static public String readStringToInternalStorageFile(String fileName, Context myContext) {
+        String string ="";
+        BufferedReader input = null;
+        try {
+            input = new BufferedReader(new InputStreamReader(myContext.openFileInput(fileName)));
+            String line;
+            while ((line = input.readLine()) != null) {
+                string=line;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return string;
+    }
 
 }

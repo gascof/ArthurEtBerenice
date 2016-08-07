@@ -9,10 +9,51 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:id="@+id/linearLayoutFilter">
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="filtre SMS :   #"
+            android:id="@+id/textViewSmsFilter"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextSmsFilter"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textViewSmsFilter"
+            android:layout_toEndOf="@+id/textViewSmsFilter"
+            android:text="ArthurBerenice" />
+
+        <Button
+            android:id="@+id/buttonSaveFilterText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/editTextSmsFilter"
+            android:layout_toEndOf="@+id/editTextSmsFilter" />
+
+    </LinearLayout>
+
+
     <Button android:id="@+id/buttonDrivePick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DrivePick"
+        android:layout_below="@+id/linearLayoutFilter"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -22,7 +63,7 @@
         android:layout_height="wrap_content"
         android:text="Select"
         android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
+        android:layout_above="@android:id/list"
         android:layout_toRightOf="@+id/buttonDrivePick"
         android:layout_toEndOf="@+id/buttonDrivePick" />
 
